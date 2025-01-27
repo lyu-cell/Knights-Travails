@@ -1,3 +1,10 @@
+
+/*
+This function returns all 8 possible moves of a knight regardless of its position on the board.
+The moves are generated as absolute positions and may include invalid ones
+(e.g., positions outside the board).
+*/
+
 function knightLader(move, edge) {
     let b = move
     
@@ -14,7 +21,8 @@ function knightLader(move, edge) {
     return b
 }
 
-
+/*Only filters moves returned by 'knightLader' that has went outside the board
+*/
 function possibleMoves(edge) {
     let move = []
     let validMoves = []
@@ -23,7 +31,6 @@ function possibleMoves(edge) {
     knightLader(move, edge)
 
     for (let i = 0; i < move.length; i++) {
-
         if(condition.includes(move[i][0]) === true && condition.includes(move[i][1]) === true) {
             validMoves.push(move[i])
         }
@@ -34,11 +41,24 @@ function possibleMoves(edge) {
 
 
 
-console.log("result: ", possibleMoves([7, 3]))
+console.log("result: ", possibleMoves([3, 3]))
 
 
 
+function includeArray(container, array) {
+    let result = false
+
+    for (let i = 0; i < container.length; i++) {
+        if(container[i].toString() === array.toString()) {
+            result = true
+        }
+    }
+    return result
+}
 
 
-
-
+//function edgeListMaker() {
+//    let edgeList = []
+//
+//    if()
+//}
