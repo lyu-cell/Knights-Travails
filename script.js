@@ -1,73 +1,37 @@
-
-/*
-This function returns all 8 possible moves of a knight regardless of its position on the board.
-The moves are generated as absolute positions and may include invalid ones
-(e.g., positions outside the board).
-*/
-
-function knightLader(move, edge) {
-    let b = move
-    
-    move.push([edge[0]+2, edge[1]+1])
-    move.push([edge[0]+2, edge[1]-1])
-    move.push([edge[0]-2, edge[1]+1])
-    move.push([edge[0]-2, edge[1]-1])
-    
-    move.push([edge[1]+2, edge[0]+1])
-    move.push([edge[1]+2, edge[0]-1])
-    move.push([edge[1]-2, edge[0]+1])
-    move.push([edge[1]-2, edge[0]-1])
-
-    return b
-}
-
-/*Only filters moves returned by 'knightLader' that has went outside the board
-*/
-
-function possibleMoves(edge) {
-    let move = []
+// this function returns an array of knight moves possible from the input which is given to it
+// it takes in the current location of the knight and returns a range of possible moves form that location
+// it doesn't include any duplicate moves or repeated moves or moves that goes outside the board 
+function knightMoves(edge) {
+    let possibleMoves = []
+    let validMoveStr = []   
     let validMoves = []
     let condition = [0, 1, 2, 3, 4, 5, 6, 7]
 
-    knightLader(move, edge)
+    possibleMoves.push([edge[0]+2, edge[1]+1])
+    possibleMoves.push([edge[0]+2, edge[1]-1])
+    possibleMoves.push([edge[0]-2, edge[1]+1])
+    possibleMoves.push([edge[0]-2, edge[1]-1])
+    possibleMoves.push([edge[1]+2, edge[0]+1])
+    possibleMoves.push([edge[1]+2, edge[0]-1])
+    possibleMoves.push([edge[1]-2, edge[0]+1])
+    possibleMoves.push([edge[1]-2, edge[0]-1])
+  
 
-    for (let i = 0; i < move.length; i++) {
-        if(condition.includes(move[i][0]) === true && condition.includes(move[i][1]) === true) {
-            validMoves.push(move[i])
+    for (let i = 0; i < possibleMoves.length; i++) {
+        if(condition.includes(possibleMoves[i][0]) === true &&
+           condition.includes(possibleMoves[i][1]) === true && 
+           validMoveStr.includes(possibleMoves[i].toString()) === false) {
+            validMoveStr.push(possibleMoves[i].toString())
+            validMoves.push(possibleMoves[i])
         }
     }
+
     
-    return validMoves 
+    return validMoves
 }
 
 
 
-
-
-
-function includeArray(container, array) {
-    let result = false
-
-    for (let i = 0; i < container.length; i++) {
-        if(container[i].toString() === array.toString()) {
-            result = true
-        }
-    }
-    return result
-}
-
-
-
-// this function is used to filter our any duplicate edges that 
-// "possibleMoves" output might throw
-function filter(storage, item) {
-    let duplicate = false
-    for (let i = 0; i < storage.length; i++) {
-        if(storage[i].toString() === item.toString()) duplicate = true
-    }
-
-    if(duplicate === false) storage.push(item)
-}
 
 
 
@@ -151,33 +115,3 @@ function buildKnightTree(knightPosition, destination) {
     return mother
 }
 let mother = buildKnightTree([2, 1], [3, 3])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
