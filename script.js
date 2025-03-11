@@ -22,68 +22,12 @@ function knightMoves(edge) {
            condition.includes(possibleMoves[i][1]) === true && 
            validMoveStr.includes(possibleMoves[i].toString()) === false) {
             validMoveStr.push(possibleMoves[i].toString())
-            validMoves.push(possibleMoves[i])
+            validMoves.push({data: possibleMoves[i]})
         }
     }
 
-    
     return validMoves
 }
-
-
-
-
-
-
-//this function is used to encase the possibleMoves output and the current edge which is used to get
-// those outputs from "possibleMoves" into an object.
-function d(edge) {
-    let result = possibleMoves(edge)
-    let storage = []
-    
-    storage.push(result[0])
-
-    if(result.length !== 0) {
-        for (let i = 0; i < result.length; i++) {
-            filter(storage, result[i])
-        }
-    }
-
-    return storage
-}
-
-
-
-
-
-
-
-
-
-let root = d([2, 1])
-
-
-
-function  show(index, child, mother) {
-    let childVer = d(child)
-    console.log(childVer)
-
-    mother.children[0][index] = childVer
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -95,17 +39,14 @@ function buildKnightTree(knightPosition, destination) {
 
     function lastNodeProcessor() {
         let lastNode = queue.shift()
- 
         if(lastNode.data.toString() === destination.toString()) return
         else {
-            let possibleChildren = d(lastNode.data)
-            let possibleChildrenObj = []
-            for (let i = 0; i < possibleChildren.length; i++) {
-                possibleChildrenObj.push({data: possibleChildren[i]})
+            let possibleMoves = knightMoves(lastNode.data)
+            lastNode.children = possibleMoves
+            for (let i = 0; i < possibleMoves.length; i++) {
+                queue.push(possibleMoves[i])
             }
 
-            lastNode.children = possibleChildrenObj
-            possibleChildrenObj.forEach((e) => queue.push(e))
             return lastNodeProcessor()
         }
     }
@@ -114,4 +55,7 @@ function buildKnightTree(knightPosition, destination) {
 
     return mother
 }
+
 let mother = buildKnightTree([2, 1], [3, 3])
+
+console.log(mother)
